@@ -1,0 +1,31 @@
+# Copy this file to terraform.tfvars and fill in your values
+
+project_id = "your-gcp-project-id"
+region     = "us-central1"
+zone       = "us-central1-a"
+
+environment = "dev"
+subnet_cidr = "10.0.1.0/24"
+
+machine_type = "e2-medium"
+vm_image     = "ubuntu-os-cloud/ubuntu-2204-lts"
+disk_size    = 20
+
+ssh_user       = "ubuntu"
+ssh_public_key = "ssh-rsa AAAAB3NzaC1yc2E... your-public-key-here"
+
+# For workload identity with GitHub Actions
+github_repository = "your-username/your-repo"
+
+startup_script = <<-EOF
+#!/bin/bash
+apt-get update
+apt-get install -y docker.io git curl
+systemctl start docker
+systemctl enable docker
+usermod -aG docker ubuntu
+
+# Install Google Cloud SDK
+curl https://sdk.cloud.google.com | bash
+exec -l $SHELL
+EOF
