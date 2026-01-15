@@ -1,0 +1,107 @@
+name: Deploy GCP Infrastructure
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:
+
+env:
+  PROJECT_ID: praxis-gear-483220-k4
+  TF_VERSION: 1.5.0
+
+jobs:
+  terraform-plan:
+    name: Terraform Plan
+    runs-on: ubuntu-latest
+    
+    permissions:
+      contents: read
+      id-token: write
+      pull-requests: write
+      
+    steps:
+    - name: Checkout Code
+      uses: actions/checkout@v4
+      
+    - name: Authenticate to GCP with WIF
+      uses: google-github-actions/auth@v2
+      with:
+        workload_identity_provider: 'projects/251838763754/locations/global/workloadIdentityPools/github-pool/providers/github'
+        service_account: 'galaxy@praxis-gear-483220-k4.iam.gserviceaccount.com'
+        
+    - name: Set up Cloud SDK
+      uses: google-github-actions/setup-gcloud@v2
+      
+    - name: Setup Terraform
+      uses: hashicorp/setup-terraform@v3
+      with:
+        terraform_version: ${{ env.TF_VERSION }}
+        
+    - name: Terraform Format Check
+      run: terraform fmt -check -recursive
+      continue-on-error: true
+      
+    - name: Terraform Init
+      run: terraform init
+      
+    - name: Terraform Validate
+      run: terraform validate
+      
+    - name: Terraform Plan
+      id: plan
+      run: |
+        terraform plan \
+          -var-file="environments/dev/terraform.tfvars" \
+          -out=tfplan \
+          -no-color
+      continue-on-error: true
+
+  terraform-apply:
+    name: Terraform Apply
+    runs-on: ubuntu-latest
+    needs: terraform-plan
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    
+    permissions:
+      contents: read
+      id-token: write
+      
+    steps:
+    - name: Checkout Code
+      uses: actions/checkout@v4
+      
+    - name: Authenticate to GCP with WIF
+      uses: google-github-actions/auth@v2
+      with:
+        workload_identity_provider: 'projects/251838763754/locations/global/workloadIdentityPools/github-pool/providers/github'
+        service_account: 'galaxy@praxis-gear-483220-k4.iam.gserviceaccount.com'
+        
+    - name: Set up Cloud SDK
+      uses: google-github-actions/setup-gcloud@v2
+      
+    - name: Setup Terraform
+      uses: hashicorp/setup-terraform@v3
+      with:
+        terraform_version: ${{ env.TF_VERSION }}
+        
+    - name: Terraform Init
+      run: terraform init
+      
+    - name: Terraform Apply
+      run: |
+        terraform apply \
+          -var-file="environments/dev/terraform.tfvars" \
+          -auto-approve
+          
+    - name: Deployment Summary
+      run: |
+        echo "🎉 Deployment completed successfully!"
+        echo ""
+        echo "📊 Infrastructure deployed using:"
+        echo "  - Workload Identity Federation (keyless)"
+        echo "  - Service Account: galaxy@praxis-gear-483220-k4.iam.gserviceaccount.com"
+        echo "  - No service account keys used or stored"
+        echo ""
+        terraform output

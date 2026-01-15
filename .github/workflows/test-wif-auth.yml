@@ -1,0 +1,57 @@
+name: Test WIF Authentication
+
+on:
+  workflow_dispatch:  # Manual trigger for testing
+  push:
+    branches: [ main ]
+
+jobs:
+  test-auth:
+    name: Test WIF Authentication
+    runs-on: ubuntu-latest
+    
+    # CRITICAL: These permissions are required for WIF
+    permissions:
+      contents: read
+      id-token: write  # This allows GitHub to issue OIDC tokens
+      
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v4
+      
+    - name: Authenticate to Google Cloud using WIF
+      id: auth
+      uses: google-github-actions/auth@v2
+      with:
+        # Your WIF provider
+        workload_identity_provider: 'projects/251838763754/locations/global/workloadIdentityPools/github-pool/providers/github'
+        
+        # Your service account
+        service_account: 'galaxy@praxis-gear-483220-k4.iam.gserviceaccount.com'
+        
+    - name: Set up Cloud SDK
+      uses: google-github-actions/setup-gcloud@v2
+      
+    - name: Verify Authentication
+      run: |
+        echo "🔐 Testing WIF Authentication..."
+        echo ""
+        echo "Current authenticated account:"
+        gcloud auth list
+        echo ""
+        echo "Current project:"
+        gcloud config get-value project
+        echo ""
+        echo "✅ WIF Authentication Successful!"
+        
+    - name: Test GCP Access
+      run: |
+        echo "🧪 Testing GCP API access..."
+        echo ""
+        echo "Listing compute instances:"
+        gcloud compute instances list --limit=5
+        echo ""
+        echo "Listing service accounts:"
+        gcloud iam service-accounts list --limit=5
+        echo ""
+        echo "✅ GCP Access Verified!"

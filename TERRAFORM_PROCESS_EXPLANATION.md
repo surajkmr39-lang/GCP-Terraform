@@ -1,5 +1,9 @@
 # 📋 Terraform Infrastructure Deployment Process
 
+**Author**: Suraj Kumar  
+**Project**: GCP Development Environment  
+**Date**: January 2026
+
 ## 🎯 Overview
 This document explains the complete Terraform infrastructure deployment process for creating a GCP development environment with workload identity federation.
 

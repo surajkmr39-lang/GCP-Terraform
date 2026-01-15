@@ -1,5 +1,7 @@
 # 🎤 Terraform GCP Infrastructure Presentation Notes
 
+**Author**: Suraj Kumar
+
 ## 📋 Presentation Overview
 **Duration**: 45-60 minutes  
 **Audience**: Technical team, stakeholders, management  

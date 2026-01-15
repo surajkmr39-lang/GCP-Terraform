@@ -1,5 +1,7 @@
 # Infrastructure Setup Guide
 
+**Author**: Suraj Kumar
+
 ## Prerequisites Checklist
 
 ### 1. Google Cloud Setup

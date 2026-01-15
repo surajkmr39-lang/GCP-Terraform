@@ -6,6 +6,8 @@
 
 Enterprise-grade Google Cloud Platform infrastructure deployment using Terraform with modular architecture, security hardening, and workload identity federation.
 
+**Author**: Suraj Kumar
+
 ## 📋 Project Overview
 
 This project demonstrates the deployment of a secure, scalable development environment on Google Cloud Platform using Infrastructure as Code principles. The implementation follows enterprise best practices with comprehensive security features and cost optimization.
@@ -314,6 +316,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ---
 
+**Created by**: Suraj Kumar  
 **⭐ If this project helped you, please give it a star!**
 
 **🚀 Infrastructure as Code | 🔐 Security First | 💰 Cost Optimized**
