@@ -41,10 +41,18 @@ This project demonstrates the deployment of a secure, scalable development envir
 ## 📁 Project Structure
 
 ```
-├── main.tf                           # Root module orchestration
-├── variables.tf                      # Root variables
-├── outputs.tf                        # Root outputs
-├── modules/
+├── main.tf                           # Root Terraform configuration
+├── variables.tf                      # Variable definitions
+├── outputs.tf                        # Output definitions
+├── terraform.tfvars.example          # Example variables file
+├── Makefile                          # Build automation commands
+├── Check-WIF-Status.ps1              # WIF validation script
+├── architecture-diagram.py           # Generate architecture diagram
+├── .github/workflows/                # CI/CD pipelines
+│   ├── cicd-pipeline.yml            # Main CI/CD workflow
+│   ├── deploy-infrastructure.yml    # Deployment workflow
+│   └── test-wif-auth.yml            # WIF authentication test
+├── modules/                          # Terraform modules
 │   ├── network/                      # VPC, subnets, NAT gateway
 │   │   ├── main.tf
 │   │   ├── variables.tf
@@ -61,19 +69,24 @@ This project demonstrates the deployment of a secure, scalable development envir
 │       ├── main.tf
 │       ├── variables.tf
 │       └── outputs.tf
-├── environments/
+├── environments/                     # Environment-specific configs
 │   ├── dev/terraform.tfvars          # Development configuration
 │   ├── staging/terraform.tfvars      # Staging configuration
 │   └── prod/terraform.tfvars         # Production configuration
-├── docs/
-│   ├── SETUP.md                      # Setup instructions
-│   ├── DEPLOYMENT_SUCCESS.md         # Deployment results
-│   └── TERRAFORM_PROCESS_EXPLANATION.md
-├── presentation/
-│   ├── Terraform_GCP_Infrastructure_Presentation.pptx
-│   ├── PRESENTATION_NOTES.md
-│   └── architecture-diagram.py
-└── Makefile                          # Automation commands
+├── labs/                             # Authentication practice labs
+│   ├── phase-1-adc/                  # Application Default Credentials
+│   ├── phase-2-service-account-keys/ # Service Account Keys
+│   ├── phase-3-impersonation/        # Service Account Impersonation
+│   ├── phase-4-workload-identity/    # Workload Identity Federation
+│   └── phase-5-github-actions-wif/   # GitHub Actions with WIF
+└── docs/                             # Documentation & diagrams
+    ├── README.md                     # This file
+    ├── SETUP.md                      # Setup instructions
+    ├── CICD-PIPELINE-GUIDE.md        # CI/CD documentation
+    ├── WIF-QUICK-REFERENCE.md        # WIF reference guide
+    ├── gcp-architecture-diagram.png  # Architecture diagram (generated)
+    └── *.py                          # Diagram generator scripts
+```
 ```
 
 ## 🚀 Quick Start
