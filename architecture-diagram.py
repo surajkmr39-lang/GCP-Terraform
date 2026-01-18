@@ -47,10 +47,10 @@ header_box = FancyBboxPatch((1, 12.5), 18, 1.2,
 ax.add_patch(header_box)
 
 # Title with professional typography
-ax.text(10, 13.4, 'Google Cloud Platform - Development Environment', 
+ax.text(10, 13.4, 'Enterprise Multi-Environment GCP Infrastructure', 
         fontsize=22, fontweight='bold', ha='center', color=text_primary,
         family='sans-serif')
-ax.text(10, 12.9, 'Infrastructure Architecture | Project: praxis-gear-483220-k4', 
+ax.text(10, 12.9, 'Development • Staging • Production | Project: praxis-gear-483220-k4', 
         fontsize=14, ha='center', color=text_secondary, style='italic')
 
 # Add GCP logo placeholder (represented as colored circle)
@@ -105,7 +105,7 @@ vpc_header = FancyBboxPatch((6.5, 9.8), 11, 0.6,
                            facecolor=gcp_green, 
                            edgecolor=gcp_green, linewidth=1)
 ax.add_patch(vpc_header)
-ax.text(12, 10.1, 'VPC Network: dev-vpc', 
+ax.text(12, 10.1, 'VPC Network: development-vpc', 
         fontsize=14, fontweight='bold', ha='center', color='white')
 
 # Subnet Container
@@ -121,7 +121,7 @@ subnet_header = FancyBboxPatch((7.5, 8.8), 9, 0.5,
                               facecolor=gcp_yellow, 
                               edgecolor=gcp_yellow, linewidth=1)
 ax.add_patch(subnet_header)
-ax.text(12, 9.05, 'Subnet: dev-subnet (10.0.1.0/24)', 
+ax.text(12, 9.05, 'Subnet: development-subnet (10.10.0.0/16)', 
         fontsize=12, fontweight='bold', ha='center', color='white')
 
 # Network Infrastructure Components
@@ -134,7 +134,7 @@ ax.add_patch(router_box)
 router_icon = Circle((8.5, 8), 0.2, facecolor=gcp_green, edgecolor='white', linewidth=1)
 ax.add_patch(router_icon)
 ax.text(9.7, 8.1, 'Cloud Router', fontsize=11, fontweight='bold', ha='center', color=gcp_green)
-ax.text(9.7, 7.8, 'dev-router', fontsize=9, ha='center', color=text_secondary)
+ax.text(9.7, 7.8, 'development-router', fontsize=9, ha='center', color=text_secondary)
 
 # Cloud NAT
 nat_box = FancyBboxPatch((11.5, 7.5), 2.5, 1, 
@@ -145,7 +145,7 @@ ax.add_patch(nat_box)
 nat_icon = Circle((12, 8), 0.2, facecolor=gcp_yellow, edgecolor='white', linewidth=1)
 ax.add_patch(nat_icon)
 ax.text(13.2, 8.1, 'Cloud NAT', fontsize=11, fontweight='bold', ha='center', color=gcp_yellow)
-ax.text(13.2, 7.8, 'dev-nat', fontsize=9, ha='center', color=text_secondary)
+ax.text(13.2, 7.8, 'development-nat', fontsize=9, ha='center', color=text_secondary)
 
 # VM Instance - Main Component
 vm_container = FancyBboxPatch((8.5, 4.5), 5, 2.5, 
@@ -163,10 +163,10 @@ ax.add_patch(vm_icon)
 ax.text(9.4, 6.5, 'VM', fontsize=16, ha='center', va='center')
 
 ax.text(11.5, 6.5, 'Compute Engine Instance', fontsize=13, fontweight='bold', ha='center', color=gcp_red)
-ax.text(11.5, 6.1, 'dev-vm | e2-medium', fontsize=11, fontweight='bold', ha='center', color=text_primary)
+ax.text(11.5, 6.1, 'development-vm | e2-medium', fontsize=11, fontweight='bold', ha='center', color=text_primary)
 ax.text(11.5, 5.8, 'Ubuntu 22.04 LTS', fontsize=10, ha='center', color=text_secondary)
-ax.text(11.5, 5.5, 'Internal: 10.0.1.2', fontsize=10, ha='center', color=text_secondary)
-ax.text(11.5, 5.2, 'External: 34.173.255.107', fontsize=10, ha='center', color=text_secondary)
+ax.text(11.5, 5.5, 'Internal: 10.10.0.2', fontsize=10, ha='center', color=text_secondary)
+ax.text(11.5, 5.2, 'External: Dynamic IP', fontsize=10, ha='center', color=text_secondary)
 
 # Docker badge
 docker_badge = FancyBboxPatch((10.5, 4.7), 2, 0.3, 
@@ -184,7 +184,7 @@ sa_container = FancyBboxPatch((8, 3), 6, 0.8,
 ax.add_patch(sa_container)
 sa_icon = Circle((8.5, 3.4), 0.15, facecolor=gcp_blue, edgecolor='white', linewidth=1)
 ax.add_patch(sa_icon)
-ax.text(11, 3.5, 'Service Account: dev-vm-sa', fontsize=11, fontweight='bold', ha='center', color=gcp_blue)
+ax.text(11, 3.5, 'Service Account: development-vm-sa', fontsize=11, fontweight='bold', ha='center', color=gcp_blue)
 ax.text(11, 3.2, 'Workload Identity Enabled', fontsize=9, ha='center', color=text_secondary)
 
 # Security & IAM Panel
@@ -248,9 +248,9 @@ ax.text(2.75, 5.2, 'Workload Identity', fontsize=12, fontweight='bold', ha='cent
 
 # WI details
 wi_details = [
-    ('Pool ID:', 'dev-pool'),
+    ('Pool ID:', 'github-pool'),
     ('Provider:', 'GitHub Actions'),
-    ('Repository:', 'Configured'),
+    ('Repository:', 'surajkmr39-lang/GCP-Terraform'),
     ('Status:', 'Active')
 ]
 
@@ -311,19 +311,19 @@ metrics_header = FancyBboxPatch((16, 5.5), 3, 0.4,
                                facecolor=text_primary, 
                                edgecolor=text_primary, linewidth=1)
 ax.add_patch(metrics_header)
-ax.text(17.5, 5.7, 'Infrastructure Metrics', fontsize=11, fontweight='bold', ha='center', color='white')
+ax.text(17.5, 5.7, 'Multi-Environment Setup', fontsize=11, fontweight='bold', ha='center', color='white')
 
-# Status indicators
-status_items = [
-    ('Resources:', '15 Created', success_green),
-    ('Modules:', '4 Deployed', success_green),
-    ('Security:', 'Compliant', success_green),
-    ('Cost/Month:', '$18-24', warning_orange),
-    ('Uptime:', '99.9% SLA', success_green)
+# Environment status indicators
+env_items = [
+    ('Development:', '10.10.0.0/16', success_green),
+    ('Staging:', '10.20.0.0/16', warning_orange),
+    ('Production:', '10.30.0.0/16', error_red),
+    ('State Storage:', 'Remote GCS', success_green),
+    ('CI/CD Ready:', 'All Envs', success_green)
 ]
 
 y_pos = 5
-for label, value, color in status_items:
+for label, value, color in env_items:
     status_dot = Circle((16.3, y_pos), 0.08, facecolor=color, edgecolor='white', linewidth=1)
     ax.add_patch(status_dot)
     ax.text(16.6, y_pos, label, fontsize=9, fontweight='bold', va='center', color=text_primary)
@@ -336,9 +336,9 @@ deployment_info = FancyBboxPatch((16, 1.5), 3, 1,
                                 facecolor='#F8F9FA', 
                                 edgecolor=border_gray, linewidth=1)
 ax.add_patch(deployment_info)
-ax.text(17.5, 2.2, 'Deployed via Terraform', fontsize=10, fontweight='bold', ha='center', color=text_primary)
-ax.text(17.5, 1.9, 'Infrastructure as Code', fontsize=9, ha='center', color=text_secondary)
-ax.text(17.5, 1.6, 'Version Controlled', fontsize=9, ha='center', color=text_secondary)
+ax.text(17.5, 2.2, 'Enterprise Architecture', fontsize=10, fontweight='bold', ha='center', color=text_primary)
+ax.text(17.5, 1.9, 'Multi-Environment Ready', fontsize=9, ha='center', color=text_secondary)
+ax.text(17.5, 1.6, 'Remote State Management', fontsize=9, ha='center', color=text_secondary)
 
 # Footer with professional branding
 footer = FancyBboxPatch((1, 0.1), 18, 0.6, 
@@ -355,15 +355,20 @@ plt.savefig('gcp-architecture-diagram.png', dpi=300, bbox_inches='tight',
 plt.savefig('gcp-architecture-diagram.pdf', bbox_inches='tight', 
             facecolor='white', edgecolor='none', pad_inches=0.2)
 
-print("✅ Professional architecture diagram created:")
+print("✅ Enterprise Multi-Environment Architecture Diagram Created:")
 print("   📊 gcp-architecture-diagram.png (High Resolution)")
 print("   📄 gcp-architecture-diagram.pdf (Vector Format)")
 print("\n🏗️ Enterprise Infrastructure Components:")
-print("   • VPC Network with private subnet and NAT gateway")
-print("   • Compute Engine instance with security hardening")
-print("   • Cloud IAM with workload identity federation")
-print("   • Comprehensive firewall and security policies")
-print("   • Professional monitoring and cost tracking")
-print("   • Infrastructure as Code with Terraform")
+print("   • Multi-Environment Setup (Development/Staging/Production)")
+print("   • Enterprise CIDR Blocks (/16 networks)")
+print("   • Remote State Management with GCS")
+print("   • Workload Identity Federation (keyless authentication)")
+print("   • Comprehensive security and compliance")
+print("   • CI/CD ready for all environments")
+print("\n🌍 Environment Configuration:")
+print("   • Development: 10.10.0.0/16 (e2-medium)")
+print("   • Staging: 10.20.0.0/16 (e2-standard-2)")
+print("   • Production: 10.30.0.0/16 (e2-standard-4)")
+print("   • State Storage: gs://praxis-gear-483220-k4-terraform-state/")
 
 plt.show()

@@ -1,24 +1,50 @@
-# Staging environment configuration
-project_id = "your-staging-project-id"
+# Staging Environment Configuration
+# Enterprise Naming Convention: {company}-{product}-{environment}-{component}
+# Remote Backend: State stored in GCS bucket
+
+# ===================================================================
+# PROJECT CONFIGURATION
+# ===================================================================
+project_id = "praxis-gear-483220-k4"
 region     = "us-central1"
-zone       = "us-central1-b"
+zone       = "us-central1-c"  # Different zone for availability
 
-environment = "staging"
-subnet_cidr = "10.1.1.0/24"
+# ===================================================================
+# ENVIRONMENT CONFIGURATION (Enterprise Naming)
+# ===================================================================
+environment = "staging"  # Standard enterprise environment name
+subnet_cidr = "10.20.0.0/16"  # Enterprise CIDR block (staging range)
 
-# VM Configuration
-machine_type = "e2-standard-2"
+# ===================================================================
+# COMPUTE CONFIGURATION (Staging-sized)
+# ===================================================================
+machine_type = "e2-standard-2"  # 2 vCPUs, 8GB RAM (production-like)
 vm_image     = "ubuntu-os-cloud/ubuntu-2204-lts"
-disk_size    = 30
+disk_size    = 50  # 50GB (production-like sizing)
 
-# SSH Configuration
-ssh_user           = "ubuntu"
-ssh_public_key     = ""  # Add your SSH public key here
-ssh_source_ranges  = ["10.0.0.0/8"]  # More restrictive for staging
+# ===================================================================
+# SSH CONFIGURATION
+# ===================================================================
+ssh_user       = "ubuntu"
+ssh_public_key = ""
 
-# Workload Identity
-github_repository = ""  # Format: owner/repo
+# ===================================================================
+# WORKLOAD IDENTITY FEDERATION
+# ===================================================================
+github_repository = "surajkmr39-lang/GCP-Terraform"
 
-# Tags
-team        = "platform"
-cost_center = "engineering"
+# ===================================================================
+# ENTERPRISE METADATA (Real-world tags)
+# ===================================================================
+team        = "platform-engineering"
+cost_center = "engineering-ops"
+
+# ===================================================================
+# SECURITY CONFIGURATION
+# ===================================================================
+ssh_source_ranges = ["0.0.0.0/0"]  # Restrict in real environments
+
+# ===================================================================
+# VM STARTUP SCRIPT (Staging)
+# ===================================================================
+startup_script = ""

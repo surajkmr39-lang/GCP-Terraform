@@ -18,6 +18,10 @@
 
 This project showcases a **fully operational enterprise-grade infrastructure** on Google Cloud Platform, demonstrating advanced Infrastructure as Code practices, security hardening, and cost optimization strategies used in production environments.
 
+**🏆 Unique Feature**: Demonstrates both **local** and **remote** state management approaches:
+- **Development Environment**: Local state with workspaces (currently deployed)
+- **Production Environment**: Remote state with GCS backend (ready to deploy)
+
 ### ⚡ Key Highlights
 
 <table>
@@ -49,7 +53,7 @@ This project showcases a **fully operational enterprise-grade infrastructure** o
 - GitHub Actions CI/CD pipelines
 - Automated testing and deployment
 - Infrastructure validation
-- State management best practices
+- **Local & Remote state management**
 
 </td>
 </tr>
@@ -648,7 +652,7 @@ Quarterly Tasks:
 
 - **[Architecture Diagram](gcp-architecture-diagram.png)** - Visual infrastructure overview
 - **[Diagram Generator](architecture-diagram.py)** - Python script to create diagrams
-- **[Project Structure](#-project-structure)** - Detailed file organization
+- **[State Management Comparison](STATE-MANAGEMENT-COMPARISON.md)** - Local vs Remote state demonstration
 
 </details>
 
@@ -657,7 +661,17 @@ Quarterly Tasks:
 
 - **[GitHub Actions Workflows](.github/workflows/)** - Automated deployment pipelines
 - **[WIF Validation Script](Check-WIF-Status.ps1)** - PowerShell script for authentication testing
+- **[Remote Backend Setup](Setup-RemoteBackend.ps1)** - GCS bucket configuration for production
 - **[Makefile](Makefile)** - Build automation commands
+
+</details>
+
+<details>
+<summary><b>🌍 Multi-Environment Setup</b></summary>
+
+- **[Development Environment](.)** - Local state with workspaces (currently deployed)
+- **[Production Environment](environments/prod/)** - Remote state with GCS backend
+- **[Environment Comparison](STATE-MANAGEMENT-COMPARISON.md)** - Detailed comparison and setup guide
 
 </details>
 

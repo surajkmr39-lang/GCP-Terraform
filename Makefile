@@ -1,82 +1,133 @@
-# Makefile for Terraform operations
-.PHONY: help init plan apply destroy clean validate format lint
+# Enterprise Terraform Makefile - Real-World Multi-Environment Operations
+.PHONY: help init plan apply destroy output clean validate format
 
 # Default environment
-ENV ?= dev
+ENV ?= development
 
-# Colors for output
-RED    := \033[31m
-GREEN  := \033[32m
-YELLOW := \033[33m
-BLUE   := \033[34m
-RESET  := \033[0m
+help:
+	@echo "Enterprise Terraform Operations"
+	@echo "==============================="
+	@echo ""
+	@echo "Available environments: development, staging, production"
+	@echo ""
+	@echo "Environment Operations:"
+	@echo "  make init ENV=development        # Initialize environment"
+	@echo "  make plan ENV=development        # Plan changes"
+	@echo "  make apply ENV=development       # Apply changes"
+	@echo "  make output ENV=development      # Show outputs"
+	@echo "  make destroy ENV=development     # Destroy infrastructure"
+	@echo ""
+	@echo "Quick Environment Shortcuts:"
+	@echo "  make dev-init           # Initialize development environment"
+	@echo "  make dev-plan           # Plan development changes"
+	@echo "  make dev-apply          # Apply development changes"
+	@echo "  make staging-plan       # Plan staging changes"
+	@echo "  make prod-plan          # Plan production changes"
+	@echo ""
+	@echo "Utilities:"
+	@echo "  make validate-all       # Validate all environments"
+	@echo "  make format             # Format all Terraform files"
+	@echo "  make demo-comparison    # Run state comparison demo"
 
-help: ## Show this help message
-	@echo "$(BLUE)Available commands:$(RESET)"
-	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "  $(GREEN)%-15s$(RESET) %s\n", $$1, $$2}'
+# Generic environment operations
+init:
+	@echo "Initializing $(ENV) environment..."
+	cd environments/$(ENV) && terraform init
 
-init: ## Initialize Terraform
-	@echo "$(BLUE)Initializing Terraform...$(RESET)"
-	terraform init
+plan:
+	@echo "Planning $(ENV) environment..."
+	cd environments/$(ENV) && terraform plan
 
-validate: ## Validate Terraform configuration
-	@echo "$(BLUE)Validating Terraform configuration...$(RESET)"
-	terraform validate
+apply:
+	@echo "Applying $(ENV) environment..."
+	cd environments/$(ENV) && terraform apply
 
-format: ## Format Terraform files
-	@echo "$(BLUE)Formatting Terraform files...$(RESET)"
-	terraform fmt -recursive
+output:
+	@echo "Outputs for $(ENV) environment:"
+	cd environments/$(ENV) && terraform output
 
-lint: ## Lint Terraform files with tflint
-	@echo "$(BLUE)Linting Terraform files...$(RESET)"
-	@if command -v tflint >/dev/null 2>&1; then \
-		tflint --recursive; \
-	else \
-		echo "$(YELLOW)tflint not installed. Skipping...$(RESET)"; \
-	fi
+destroy:
+	@echo "Destroying $(ENV) environment..."
+	cd environments/$(ENV) && terraform destroy
 
-plan: ## Plan Terraform changes for specified environment
-	@echo "$(BLUE)Planning Terraform changes for $(ENV) environment...$(RESET)"
-	terraform workspace select $(ENV) || terraform workspace new $(ENV)
-	terraform plan -var-file="environments/$(ENV)/terraform.tfvars"
+# Development environment shortcuts
+dev-init:
+	@$(MAKE) init ENV=development
 
-apply: ## Apply Terraform changes for specified environment
-	@echo "$(BLUE)Applying Terraform changes for $(ENV) environment...$(RESET)"
-	terraform workspace select $(ENV) || terraform workspace new $(ENV)
-	terraform apply -var-file="environments/$(ENV)/terraform.tfvars"
+dev-plan:
+	@$(MAKE) plan ENV=development
 
-destroy: ## Destroy Terraform resources for specified environment
-	@echo "$(RED)Destroying Terraform resources for $(ENV) environment...$(RESET)"
-	@read -p "Are you sure you want to destroy $(ENV) environment? [y/N] " confirm && [ "$$confirm" = "y" ]
-	terraform workspace select $(ENV)
-	terraform destroy -var-file="environments/$(ENV)/terraform.tfvars"
+dev-apply:
+	@$(MAKE) apply ENV=development
 
-output: ## Show Terraform outputs for specified environment
-	@echo "$(BLUE)Terraform outputs for $(ENV) environment:$(RESET)"
-	terraform workspace select $(ENV)
-	terraform output
+dev-output:
+	@$(MAKE) output ENV=development
 
-clean: ## Clean Terraform temporary files
-	@echo "$(BLUE)Cleaning Terraform temporary files...$(RESET)"
-	rm -rf .terraform/
-	rm -f .terraform.lock.hcl
-	rm -f terraform.tfstate*
+# Staging environment shortcuts
+staging-init:
+	@$(MAKE) init ENV=staging
 
-# Environment-specific shortcuts
-dev-plan: ## Plan for dev environment
-	@$(MAKE) plan ENV=dev
-
-dev-apply: ## Apply for dev environment
-	@$(MAKE) apply ENV=dev
-
-staging-plan: ## Plan for staging environment
+staging-plan:
 	@$(MAKE) plan ENV=staging
 
-staging-apply: ## Apply for staging environment
+staging-apply:
 	@$(MAKE) apply ENV=staging
 
-prod-plan: ## Plan for prod environment
-	@$(MAKE) plan ENV=prod
+staging-output:
+	@$(MAKE) output ENV=staging
 
-prod-apply: ## Apply for prod environment
-	@$(MAKE) apply ENV=prod
+# Production environment shortcuts
+prod-init:
+	@$(MAKE) init ENV=production
+
+prod-plan:
+	@$(MAKE) plan ENV=production
+
+prod-apply:
+	@$(MAKE) apply ENV=production
+
+prod-output:
+	@$(MAKE) output ENV=production
+
+# Utility targets
+validate-all:
+	@echo "Validating all environments..."
+	@for env in development staging production; do \
+		echo "Validating $$env..."; \
+		cd environments/$$env && terraform validate; \
+	done
+
+format:
+	@echo "Formatting Terraform files..."
+	terraform fmt -recursive .
+
+clean:
+	@echo "Cleaning temporary files..."
+	find . -name ".terraform" -type d -exec rm -rf {} + 2>/dev/null || true
+	find . -name "*.tfplan" -delete 2>/dev/null || true
+
+# State management
+state-list:
+	@echo "State for $(ENV) environment:"
+	cd environments/$(ENV) && terraform state list
+
+# Backend and demo operations
+setup-backend:
+	@echo "Setting up remote backend..."
+	./Setup-RemoteBackend.ps1
+
+demo-comparison:
+	@echo "Running state management comparison demo..."
+	./Demo-StateComparison.ps1
+
+demo-all:
+	@echo "Enterprise Multi-Environment Demo"
+	@echo "================================="
+	@echo "Development Environment:"
+	@$(MAKE) state-list ENV=dev || echo "Not initialized"
+	@echo ""
+	@echo "Staging Environment:"
+	@$(MAKE) state-list ENV=staging || echo "Not initialized"
+	@echo ""
+	@echo "Production Environment:"
+	@$(MAKE) state-list ENV=prod || echo "Not initialized"
