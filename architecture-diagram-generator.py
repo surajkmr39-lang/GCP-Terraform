@@ -47,7 +47,7 @@ edge_attr = {
 
 with Diagram(
     "🚀 Enterprise GCP Terraform Infrastructure - Enhanced Authentication",
-    filename="stunning-architecture",
+    filename="architecture-diagram",
     show=False,
     direction="TB",
     graph_attr=graph_attr,
@@ -130,11 +130,11 @@ with Diagram(
     ssl_docs >> Edge(label="📚 guides", color="#4CAF50") >> ssl_viewer
     ssl_viewer >> Edge(label="🎨 visualizes", color="#4CAF50") >> ssl_flowcharts
 
-print("✨ Enhanced stunning architecture diagram generated successfully!")
+print("✨ Enhanced architecture diagram generated successfully!")
 print("📁 Files created:")
-print("   • stunning-architecture.png (High-resolution image with latest features)")
-print("   • stunning-architecture.pdf (Presentation ready)")
-print("   • stunning-architecture.svg (Scalable vector)")
+print("   • architecture-diagram.png (High-resolution image with latest features)")
+print("   • architecture-diagram.pdf (Presentation ready)")
+print("   • architecture-diagram.svg (Scalable vector)")
 print("")
 print("🆕 New features included:")
 print("   • Multi-environment authentication strategy")
